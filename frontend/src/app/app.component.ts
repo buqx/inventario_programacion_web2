@@ -4,7 +4,51 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
-  template: `<nav><strong>Inventario Pro</strong><a routerLink="/admin" routerLinkActive="active">Administrador</a><a routerLink="/catalogo" routerLinkActive="active">Catálogo cliente</a></nav><main><router-outlet /></main>`,
-  styles: [`nav{display:flex;gap:24px;align-items:center;padding:16px 32px;background:#111827;color:white}nav strong{margin-right:auto;font-size:20px}nav a{color:#cbd5e1;text-decoration:none}nav a.active{color:#38bdf8}main{max-width:1200px;margin:auto;padding:24px}`]
+  template: `
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" routerLink="/catalogo" aria-label="Inicio">
+          <span class="brand-mark">I</span>
+          <span>
+            <strong>Inventario</strong>
+            <small>Gestión comercial</small>
+          </span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navegación principal">
+          <a routerLink="/admin" routerLinkActive="active">
+            <span class="nav-icon">▦</span>
+            <span>Administración</span>
+          </a>
+          <a routerLink="/catalogo" routerLinkActive="active">
+            <span class="nav-icon">⌂</span>
+            <span>Catálogo</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <span class="status-dot"></span>
+          Sistema operativo
+        </div>
+      </aside>
+
+      <div class="page-shell">
+        <header class="topbar">
+          <div>
+            <span class="topbar-eyebrow">Centro de operaciones</span>
+            <strong>Inventario Pro</strong>
+          </div>
+          <div class="topbar-actions">
+            <span class="avatar">A</span>
+            <span class="user-copy"><strong>Administrador</strong><small>Acceso activo</small></span>
+          </div>
+        </header>
+        <main class="page-content">
+          <router-outlet />
+        </main>
+      </div>
+    </div>
+  `,
+  styles: []
 })
 export class AppComponent {}
