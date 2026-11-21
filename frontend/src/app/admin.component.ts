@@ -57,17 +57,34 @@ import { ApiService } from './api.service';
       </div>
     </section>
 
+    <section class="panel" style="margin-bottom:20px">
+      <header class="panel-header"><h2>Clientes registrados</h2><span class="badge order">{{clientes.length}} registros</span></header>
+      <div class="table-wrap">
+        <table class="data-table"><thead><tr><th>Cliente</th><th>Correo electrónico</th><th>Teléfono</th><th>Dirección</th></tr></thead>
+          <tbody>
+            <tr *ngFor="let c of clientes">
+              <td><strong>{{c.nombre}}</strong></td>
+              <td>{{c.email||'—'}}</td>
+              <td>{{c.telefono||'—'}}</td>
+              <td>{{c.direccion||'—'}}</td>
+            </tr>
+            <tr *ngIf="clientes.length===0"><td colspan="4">No hay clientes registrados.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="panel">
       <header class="panel-header"><h2>Historial de ventas</h2><span class="badge order">{{ventas.length}} registros</span></header>
       <div class="table-wrap">
-        <table class="data-table"><thead><tr><th>Factura</th><th>Cliente</th><th>Productos</th><th>Total</th><th>Fecha</th></tr></thead>
+        <table class="data-table"><thead><tr><th>Factura</th><th>Cliente</th><th>Productos</th><th>Total</th><th>Fecha y hora local</th></tr></thead>
           <tbody>
             <tr *ngFor="let v of ventas">
               <td><span class="badge order">{{v.factura?.numero||'—'}}</span></td>
               <td><strong>{{v.cliente?.nombre||'—'}}</strong></td>
               <td><span *ngFor="let d of v.detalles; let last=last"><strong>{{d.cantidad}}</strong> × {{d.producto}}<span *ngIf="!last">, </span></span></td>
               <td><strong>{{v.total|number:'1.0-0'}} COP</strong></td>
-              <td>{{v.fecha|date:'dd/MM/yyyy, h:mm a'}}</td>
+              <td>{{formatearFechaLocal(v.fecha)}}</td>
             </tr>
             <tr *ngIf="ventas.length===0"><td colspan="5">No hay ventas registradas.</td></tr>
           </tbody>
@@ -95,6 +112,12 @@ export class AdminComponent implements OnInit {
     this.api.ventas().subscribe({next:v=>this.ventas=v,error:e=>this.error=e.error?.error||'Error cargando ventas'});
   }
 
+  formatearFechaLocal(fecha:string):string {
+    if(!fecha) return '—';
+    const date = new Date(fecha);
+    return isNaN(date.getTime()) ? fecha : date.toLocaleString(undefined, {dateStyle:'short', timeStyle:'medium'});
+  }
+
   guardarProducto(){
     this.error='';this.mensaje='';
     this.api.crearProducto(this.producto).subscribe({next:()=>{
@@ -113,3 +136,4 @@ export class AdminComponent implements OnInit {
     },error:e=>this.error=e.error?.error||'Error creando cliente'});
   }
 }
+
