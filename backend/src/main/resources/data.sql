@@ -1,0 +1,6 @@
+INSERT INTO productos(nombre,descripcion,precio,stock,activo) SELECT 'Laptop Lenovo','Portátil para trabajo y estudio',3200000,12,true WHERE NOT EXISTS (SELECT 1 FROM productos WHERE nombre='Laptop Lenovo');
+INSERT INTO productos(nombre,descripcion,precio,stock,activo) SELECT 'Mouse inalámbrico','Mouse óptico Bluetooth',85000,30,true WHERE NOT EXISTS (SELECT 1 FROM productos WHERE nombre='Mouse inalámbrico');
+INSERT INTO productos(nombre,descripcion,precio,stock,activo) SELECT 'Teclado mecánico','Teclado RGB compacto',210000,18,true WHERE NOT EXISTS (SELECT 1 FROM productos WHERE nombre='Teclado mecánico');
+INSERT INTO productos(nombre,descripcion,precio,stock,activo) SELECT 'Monitor 24 pulgadas','Monitor IPS Full HD',780000,10,true WHERE NOT EXISTS (SELECT 1 FROM productos WHERE nombre='Monitor 24 pulgadas');
+INSERT INTO clientes(nombre,email,telefono,direccion) SELECT 'Ana Martínez','ana@example.com','3001234567','Calle 10 #20-30' WHERE NOT EXISTS (SELECT 1 FROM clientes WHERE email='ana@example.com');
+INSERT INTO clientes(nombre,email,telefono,direccion) SELECT 'Carlos Ruiz','carlos@example.com','3017654321','Carrera 15 #8-22' WHERE NOT EXISTS (SELECT 1 FROM clientes WHERE email='carlos@example.com');
