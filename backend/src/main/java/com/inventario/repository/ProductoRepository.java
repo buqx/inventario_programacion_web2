@@ -1,2 +1,6 @@
-package com.inventario.repository; import com.inventario.domain.Producto; import org.springframework.data.jpa.repository.*; import java.util.*;
+package com.inventario.repository; import java.util.List;
+
+ import org.springframework.data.jpa.repository.JpaRepository;
+
+ import com.inventario.domain.Producto;
 public interface ProductoRepository extends JpaRepository<Producto,Long> { List<Producto> findByActivoTrue(); }

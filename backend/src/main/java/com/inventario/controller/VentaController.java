@@ -1,15 +1,17 @@
 package com.inventario.controller;
 
-import com.inventario.dto.Dtos.VentaRequest;
-import com.inventario.dto.Dtos.VentaResponse;
-import com.inventario.service.VentaService;
 import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.inventario.dto.Dtos.VentaRequest;
+import com.inventario.dto.Dtos.VentaResponse;
+import com.inventario.service.VentaService;
 
 @RestController
 @RequestMapping("/api/ventas")
