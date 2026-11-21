@@ -29,6 +29,11 @@ public class ClienteController {
     return service.listar();
   }
 
+  @GetMapping("/{id}")
+  public Cliente buscar(@PathVariable Long id) {
+    return service.buscar(id);
+  }
+
   @PostMapping
   public Cliente crear(@RequestBody ClienteRequest r) {
     return service.crear(r);

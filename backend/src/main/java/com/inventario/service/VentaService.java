@@ -105,6 +105,19 @@ public class VentaService {
     return toResponse(guardada);
   }
 
+  @Transactional
+  public void eliminar(Long id) {
+    Venta venta = ventas.findById(id).orElseThrow(() -> new ApiException("Venta no encontrada"));
+
+    for (DetalleVenta detalle : venta.getDetalles()) {
+      Producto producto = detalle.getProducto();
+      producto.setStock(producto.getStock() + detalle.getCantidad());
+      productos.save(producto);
+    }
+
+    ventas.delete(venta);
+  }
+
   private VentaResponse toResponse(Venta venta) {
     Cliente cliente = venta.getCliente();
     Factura factura = venta.getFactura();

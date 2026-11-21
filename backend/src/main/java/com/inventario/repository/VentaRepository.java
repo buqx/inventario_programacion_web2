@@ -1,4 +1,8 @@
-package com.inventario.repository; import org.springframework.data.jpa.repository.JpaRepository;
+package com.inventario.repository;
 
- import com.inventario.domain.Venta;
-public interface VentaRepository extends JpaRepository<Venta,Long> {}
+import com.inventario.domain.Venta;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface VentaRepository extends JpaRepository<Venta, Long> {
+  boolean existsByClienteId(Long clienteId);
+}

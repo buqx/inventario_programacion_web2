@@ -29,6 +29,11 @@ public class ProductoController {
     return service.listar();
   }
 
+  @GetMapping("/{id}")
+  public Producto buscar(@PathVariable Long id) {
+    return service.buscar(id);
+  }
+
   @GetMapping("/catalogo")
   public List<Producto> catalogo() {
     return service.catalogo();
