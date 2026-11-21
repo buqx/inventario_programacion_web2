@@ -11,5 +11,6 @@ public class Dtos {
   public record VentaRequest(Long clienteId, List<ItemVenta> items) {}
   public record ClienteVentaResponse(Long id, String nombre, String email) {}
   public record FacturaVentaResponse(Long id, String numero, LocalDateTime emitida, BigDecimal total) {}
-  public record VentaResponse(Long id, ClienteVentaResponse cliente, LocalDateTime fecha, BigDecimal total, String estado, FacturaVentaResponse factura) {}
+  public record DetalleVentaResponse(Long id, Long productoId, String producto, Integer cantidad, BigDecimal precioUnitario, BigDecimal subtotal) {}
+  public record VentaResponse(Long id, ClienteVentaResponse cliente, LocalDateTime fecha, BigDecimal total, String estado, FacturaVentaResponse factura, List<DetalleVentaResponse> detalles) {}
 }
