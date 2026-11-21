@@ -1,4 +1,33 @@
 package com.inventario.controller;
-import com.inventario.domain.Venta; import com.inventario.dto.Dtos.*; import com.inventario.service.VentaService; import org.springframework.web.bind.annotation.*; import java.util.List;
-@RestController @RequestMapping("/api/ventas") @CrossOrigin
-public class VentaController { private final VentaService service; public VentaController(VentaService service){this.service=service;} @GetMapping public List<Venta> listar(){return service.listar();} @PostMapping public Venta crear(@RequestBody VentaRequest r){return service.crear(r);} }
+
+import com.inventario.dto.Dtos.VentaRequest;
+import com.inventario.dto.Dtos.VentaResponse;
+import com.inventario.service.VentaService;
+import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/ventas")
+@CrossOrigin
+public class VentaController {
+  private final VentaService service;
+
+  public VentaController(VentaService service) {
+    this.service = service;
+  }
+
+  @GetMapping
+  public List<VentaResponse> listar() {
+    return service.listar();
+  }
+
+  @PostMapping
+  public VentaResponse crear(@RequestBody VentaRequest request) {
+    return service.crear(request);
+  }
+}

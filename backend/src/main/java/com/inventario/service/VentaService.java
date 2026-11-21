@@ -5,8 +5,11 @@ import com.inventario.domain.DetalleVenta;
 import com.inventario.domain.Factura;
 import com.inventario.domain.Producto;
 import com.inventario.domain.Venta;
+import com.inventario.dto.Dtos.ClienteVentaResponse;
+import com.inventario.dto.Dtos.FacturaVentaResponse;
 import com.inventario.dto.Dtos.ItemVenta;
 import com.inventario.dto.Dtos.VentaRequest;
+import com.inventario.dto.Dtos.VentaResponse;
 import com.inventario.exception.ApiException;
 import com.inventario.repository.ClienteRepository;
 import com.inventario.repository.FacturaRepository;
@@ -32,12 +35,13 @@ public class VentaService {
     this.facturas = facturas;
   }
 
-  public List<Venta> listar() {
-    return ventas.findAll();
+  @Transactional(readOnly = true)
+  public List<VentaResponse> listar() {
+    return ventas.findAll().stream().map(this::toResponse).toList();
   }
 
   @Transactional
-  public Venta crear(VentaRequest r) {
+  public VentaResponse crear(VentaRequest r) {
     if (r.items() == null || r.items().isEmpty()) {
       throw new ApiException("La venta debe tener productos");
     }
@@ -86,7 +90,27 @@ public class VentaService {
     facturas.save(factura);
     guardada.setFactura(factura);
 
-    return guardada;
+    return toResponse(guardada);
+  }
+
+  private VentaResponse toResponse(Venta venta) {
+    Cliente cliente = venta.getCliente();
+    Factura factura = venta.getFactura();
+
+    ClienteVentaResponse clienteResponse = cliente == null ? null
+        : new ClienteVentaResponse(cliente.getId(), cliente.getNombre(), cliente.getEmail());
+
+    FacturaVentaResponse facturaResponse = factura == null ? null
+        : new FacturaVentaResponse(factura.getId(), factura.getNumero(), factura.getEmitida(), factura.getTotal());
+
+    return new VentaResponse(
+        venta.getId(),
+        clienteResponse,
+        venta.getFecha(),
+        venta.getTotal(),
+        venta.getEstado() == null ? null : venta.getEstado().name(),
+        facturaResponse
+    );
   }
 }
 
